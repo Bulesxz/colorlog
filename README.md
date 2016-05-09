@@ -5,4 +5,4 @@
     go install
 ```
 # use
-![](https://github.com/qianlnk/colorlog/blob/master/colorlog.png)
+![](https://github.com/qianlnk/colorlog/blob/master/coloreg.png)
