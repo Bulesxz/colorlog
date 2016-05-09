@@ -5,7 +5,4 @@
     go install
 ```
 # use
-```golang
-    echo "hello, I am qianlnk, this is a test message" | colorlog hello qianlnk
-```
-then key word 'hello' 'qianlnk' will tag with color.
+![](https://github.com/qianlnk/colorlog/blob/master/colorlog.png)
