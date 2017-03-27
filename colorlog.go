@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"encoding/json"
 	"flag"
 	"fmt"
 	"os"
@@ -9,8 +10,8 @@ import (
 )
 
 const (
-	black = iota
-	red
+	//black
+	red = iota
 	green
 	brown
 	blue
@@ -32,7 +33,7 @@ var allColors map[int]string
 
 func init() {
 	allColors = make(map[int]string)
-	allColors[black] = "\033[22;30m"
+	//allColors[black] = "\033[22;30m"
 	allColors[red] = "\033[22;31m"
 	allColors[green] = "\033[22;32m"
 	allColors[brown] = "\033[22;33m"
@@ -51,12 +52,30 @@ func init() {
 	allColors[end] = "\033[0m"
 }
 
+func getJsonKeys(s string) []string {
+	var feilds map[string]interface{}
+	var keys []string
+	err := json.Unmarshal([]byte(s), &feilds)
+	if err != nil {
+		return keys
+	}
+
+	for k := range feilds {
+		keys = append(keys, "\""+k+"\"")
+	}
+	return keys
+}
+
 func printWithColor(s string, subs ...string) {
 	tmps := s
-	for i, sub := range subs {
+	keys := getJsonKeys(s)
+	for _, sub := range subs {
+		keys = append(keys, sub)
+	}
+	for i, k := range keys {
 		var color int
 		color = i % 16
-		tmps = strings.Replace(tmps, sub, allColors[color]+sub+allColors[end], -1)
+		tmps = strings.Replace(tmps, k, allColors[color]+k+allColors[end], -1)
 	}
 	fmt.Printf(tmps)
 }
