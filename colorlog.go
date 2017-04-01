@@ -6,6 +6,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"sort"
 	"strings"
 )
 
@@ -72,6 +73,8 @@ func printWithColor(s string, subs ...string) {
 	for _, sub := range subs {
 		keys = append(keys, sub)
 	}
+
+	sort.Strings(keys)
 	for i, k := range keys {
 		var color int
 		color = i % 16
