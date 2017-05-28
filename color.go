@@ -1,7 +1,6 @@
 package main
 
 type ColorType int
-type ColorCode string
 
 const (
 	ColorOff ColorType = iota
@@ -70,7 +69,7 @@ const (
 	HighIntensityBackgroundWhite
 )
 
-var colors = map[ColorType]ColorCode{
+var Colors = map[ColorType]string{
 	ColorOff: "\033[0m",
 	Black:    "\033[0;30m",
 	Red:      "\033[0;31m",
