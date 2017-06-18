@@ -10,23 +10,27 @@ import (
 	"strings"
 )
 
-func getJsonKeys(s string) []string {
+func getJsonKeys(s string) ([]string, string) {
 	var feilds map[string]interface{}
 	var keys []string
 	err := json.Unmarshal([]byte(s), &feilds)
 	if err != nil {
-		return keys
+		return keys, ""
 	}
 
-	for k := range feilds {
+	level := ""
+	for k, v := range feilds {
 		keys = append(keys, "\""+k+"\"")
+		if k == "level" {
+			level = v.(string)
+		}
 	}
-	return keys
+	return keys, level
 }
 
 func printWithColor(s string, subs []string) {
 	tmps := s
-	keys := getJsonKeys(s)
+	keys, level := getJsonKeys(s)
 	sort.Strings(keys)
 	index := 0
 	for _, k := range keys {
@@ -41,7 +45,25 @@ func printWithColor(s string, subs []string) {
 		}
 
 		colorType := ColorType(index)
-		tmps = strings.Replace(tmps, k, Colors[colorType]+k+Colors[ColorOff], -1)
+		switch level {
+		case "error":
+			tmps = strings.Replace(tmps, k, Colors[ColorOff]+Colors[colorType]+k+Colors[ColorOff]+Colors[Red], -1)
+		case "warn":
+			tmps = strings.Replace(tmps, k, Colors[ColorOff]+Colors[colorType]+k+Colors[ColorOff]+Colors[Yellow], -1)
+		case "debug":
+			tmps = strings.Replace(tmps, k, Colors[ColorOff]+Colors[colorType]+k+Colors[ColorOff]+Colors[Green], -1)
+		default:
+			tmps = strings.Replace(tmps, k, Colors[colorType]+k+Colors[ColorOff], -1)
+		}
+	}
+
+	switch level {
+	case "error":
+		tmps = Colors[Red] + tmps + Colors[ColorOff]
+	case "warn":
+		tmps = Colors[Yellow] + tmps + Colors[ColorOff]
+	case "debug":
+		tmps = Colors[Green] + tmps + Colors[ColorOff]
 	}
 
 	sort.Strings(subs)
