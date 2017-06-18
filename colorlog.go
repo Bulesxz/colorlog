@@ -57,6 +57,21 @@ func printWithColor(s string, subs []string) {
 		}
 	}
 
+	sort.Strings(subs)
+	for i, sub := range subs {
+		colorType := ColorType(i + 2 + 8*3)
+		switch level {
+		case "error":
+			tmps = strings.Replace(tmps, sub, Colors[ColorOff]+Colors[colorType]+Colors[UnderlineBlack]+sub+Colors[ColorOff]+Colors[ColorOff]+Colors[Red], -1)
+		case "warn":
+			tmps = strings.Replace(tmps, sub, Colors[ColorOff]+Colors[colorType]+Colors[UnderlineBlack]+sub+Colors[ColorOff]+Colors[ColorOff]+Colors[Yellow], -1)
+		case "debug":
+			tmps = strings.Replace(tmps, sub, Colors[ColorOff]+Colors[colorType]+Colors[UnderlineBlack]+sub+Colors[ColorOff]+Colors[ColorOff]+Colors[Green], -1)
+		default:
+			tmps = strings.Replace(tmps, sub, Colors[colorType]+Colors[UnderlineBlack]+sub+Colors[ColorOff]+Colors[ColorOff], -1)
+		}
+	}
+
 	switch level {
 	case "error":
 		tmps = Colors[Red] + tmps + Colors[ColorOff]
@@ -64,12 +79,6 @@ func printWithColor(s string, subs []string) {
 		tmps = Colors[Yellow] + tmps + Colors[ColorOff]
 	case "debug":
 		tmps = Colors[Green] + tmps + Colors[ColorOff]
-	}
-
-	sort.Strings(subs)
-	for i, sub := range subs {
-		colorType := ColorType(i + 2 + 8*3)
-		tmps = strings.Replace(tmps, sub, Colors[colorType]+Colors[UnderlineBlack]+sub+Colors[ColorOff]+Colors[ColorOff], -1)
 	}
 
 	fmt.Printf(tmps)
