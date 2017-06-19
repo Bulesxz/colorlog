@@ -48,7 +48,7 @@ func printWithColor(s string, subs []string) {
 		switch level {
 		case "error":
 			tmps = strings.Replace(tmps, k, Colors[ColorOff]+Colors[colorType]+k+Colors[ColorOff]+Colors[Red], -1)
-		case "warn":
+		case "warning":
 			tmps = strings.Replace(tmps, k, Colors[ColorOff]+Colors[colorType]+k+Colors[ColorOff]+Colors[Yellow], -1)
 		case "debug":
 			tmps = strings.Replace(tmps, k, Colors[ColorOff]+Colors[colorType]+k+Colors[ColorOff]+Colors[Green], -1)
@@ -63,7 +63,7 @@ func printWithColor(s string, subs []string) {
 		switch level {
 		case "error":
 			tmps = strings.Replace(tmps, sub, Colors[ColorOff]+Colors[colorType]+Colors[UnderlineBlack]+sub+Colors[ColorOff]+Colors[ColorOff]+Colors[Red], -1)
-		case "warn":
+		case "warning":
 			tmps = strings.Replace(tmps, sub, Colors[ColorOff]+Colors[colorType]+Colors[UnderlineBlack]+sub+Colors[ColorOff]+Colors[ColorOff]+Colors[Yellow], -1)
 		case "debug":
 			tmps = strings.Replace(tmps, sub, Colors[ColorOff]+Colors[colorType]+Colors[UnderlineBlack]+sub+Colors[ColorOff]+Colors[ColorOff]+Colors[Green], -1)
@@ -75,7 +75,7 @@ func printWithColor(s string, subs []string) {
 	switch level {
 	case "error":
 		tmps = Colors[Red] + tmps + Colors[ColorOff]
-	case "warn":
+	case "warning":
 		tmps = Colors[Yellow] + tmps + Colors[ColorOff]
 	case "debug":
 		tmps = Colors[Green] + tmps + Colors[ColorOff]
@@ -83,6 +83,7 @@ func printWithColor(s string, subs []string) {
 
 	fmt.Printf(tmps)
 }
+
 func main() {
 	flag.Parse()
 	args := flag.Args()
